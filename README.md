@@ -1,7 +1,7 @@
 
 # Formulário de Cadastro para novos clientes
 
-Formulário de cadastro para novos clientes com campo de Login: Email e senha;
+Formulário de cadastro para novos clientes com múltiplas partes. Campo de Login: Email e senha;
 campo Pessoal: Nome, Sobrenome e CPF;
 campo de Entrega: Endereço completo.
 Desenvolvido com React JS.
