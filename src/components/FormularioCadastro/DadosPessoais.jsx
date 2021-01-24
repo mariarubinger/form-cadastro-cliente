@@ -1,28 +1,38 @@
 import React, { useState } from 'react';
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 
-function DadosPessoais({aoEnviar, validacoes}) {
+function DadosPessoais({ aoEnviar, validacoes }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
   const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({cpf:{valido:true, texto:""}});
+  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } });
 
-  function validarCampos(event){
-    //console.log(event.target);
-    const {name, value} = event.target;
-    const novoEstado = {...erros}
-    novoEstado[name] =  validacoes[name](value);
+  function validarCampos(event) {
+    const { name, value } = event.target;
+    const novoEstado = { ...erros }
+    novoEstado[name] = validacoes[name](value);
     setErros(novoEstado);
-    console.log(novoEstado);
+  }
+
+  function possoEnviar() {
+    for (let campo in erros) {
+      if (!erros[campo].valido) {
+        return false
+      }
+    }
+    return true;
   }
 
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        aoEnviar({nome, sobrenome, cpf, promocoes, novidades});
+        if (possoEnviar()) {
+          aoEnviar({ nome, sobrenome, cpf, promocoes, novidades });
+        }
+
         //console.log({ nome, sobrenome, cpf, promocoes, novidades });
       }}
     >
@@ -44,6 +54,7 @@ function DadosPessoais({aoEnviar, validacoes}) {
           setSobrenome(event.target.value);
         }}
         id="sobrenome"
+        name="sobrenome"
         label="Sobrenome"
         variant="outlined"
         margin="normal"
@@ -70,7 +81,7 @@ function DadosPessoais({aoEnviar, validacoes}) {
       <FormControlLabel
         label="Promoções"
         control={<Switch
-        checked={promocoes}
+          checked={promocoes}
           onChange={(event) => {
             setPromocoes(event.target.checked)
           }}
@@ -83,7 +94,7 @@ function DadosPessoais({aoEnviar, validacoes}) {
       <FormControlLabel
         label="Novidades"
         control={<Switch
-        checked={novidades}
+          checked={novidades}
           onChange={(event) => {
             setNovidades(event.target.checked)
           }}
@@ -97,7 +108,7 @@ function DadosPessoais({aoEnviar, validacoes}) {
         type="submit"
         variant="contained"
         color="primary">
-        Cadastrar
+        Próximo
       </Button>
     </form>
   );
