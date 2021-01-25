@@ -9,6 +9,7 @@ Desenvolvido com React JS.
 
 ## Preview Desktop
 
+![form-cadastro-cliente](https://user-images.githubusercontent.com/66969881/105650013-33b6c780-5eaa-11eb-97a5-64c6e6f0597f.png)
 
 
 ## Cloning project
