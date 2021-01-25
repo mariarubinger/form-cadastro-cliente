@@ -1,32 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { TextField, Button, Switch, FormControlLabel } from "@material-ui/core";
 import ValidacoesCadastro from "../../contexts/ValidacoesCadastro"
+import useErros from "../../hooks/useErros";
 
 function DadosPessoais({ aoEnviar }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCpf] = useState("");
   const [promocoes, setPromocoes] = useState(true);
-  const [novidades, setNovidades] = useState(true);
-  const [erros, setErros] = useState({ cpf: { valido: true, texto: "" } });
-
-  const validacoes = useContext(ValidacoesCadastro);
-
-  function validarCampos(event) {
-    const { name, value } = event.target;
-    const novoEstado = { ...erros }
-    novoEstado[name] = validacoes[name](value);
-    setErros(novoEstado);
-  }
-
-  function possoEnviar() {
-    for (let campo in erros) {
-      if (!erros[campo].valido) {
-        return false
-      }
-    }
-    return true;
-  }
+  const [novidades, setNovidades] = useState(false);
+  const validacoes = useContext(ValidacoesCadastro)
+  const [erros, validarCampos, possoEnviar] = useErros(validacoes);
 
   return (
     <form
@@ -44,6 +28,8 @@ function DadosPessoais({ aoEnviar }) {
         onChange={(event) => {
           setNome(event.target.value);
         }}
+/*         onBlur={validarCampos}
+        error={!erros.nome.texto} */
         id="nome"
         label="Nome"
         variant="outlined"
@@ -69,7 +55,6 @@ function DadosPessoais({ aoEnviar }) {
         onChange={(event) => {
           setCpf(event.target.value);
         }}
-
         onBlur={validarCampos}
         error={!erros.cpf.valido}
         helperText={erros.cpf.texto}

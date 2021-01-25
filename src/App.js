@@ -23,11 +23,10 @@ class App extends Component {
   }
 }
 
-//ao enviar é uma propriedade
+//aoEnviar é uma propriedade
 
 function aoEnviarForm(dados) {
   console.log(dados);
 }
-
 
 export default App;
